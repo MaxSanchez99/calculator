@@ -70,7 +70,23 @@ numbers.forEach((number) => {
 operators.forEach((op) => {
     op.addEventListener('click', () => {
         if (operator !== '' && secondNum !== '') {
+
+            if (+secondNum === 0 && operator === '/') {
+                display.textContent = "Error (can't divide by zero)";
+                firstNum = '';
+                secondNum = '';
+                operator = '';
+                isResult = false;
+                return;
+            }
             let output = operate(operator, +firstNum, +secondNum);
+            if (!Number.isInteger(output)) {
+                let decimalPlaces = output.toString().split('.')[1]
+                if (decimalPlaces.length > 3) {
+                    output = parseFloat(output.toFixed(3))
+                }
+            }
+
             console.log(output);
             display.textContent = output
 
@@ -97,5 +113,4 @@ clearBtn.addEventListener('click', () => {
     secondNum = '';
     operator = '';
     display.textContent = '0';
-
 })
